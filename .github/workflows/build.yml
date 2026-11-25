@@ -23,6 +23,9 @@ jobs:
         with:
           gradle-version: '9.3.1'
 
+      - name: Crear llave de firma debug
+        run: keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
+
       - name: Generar APK
         run: gradle assembleDebug --no-configuration-cache --no-parallel -Porg.gradle.parallel=false -Porg.gradle.configuration-cache=false -Pkotlin.compiler.execution.strategy=daemon
 
@@ -31,3 +34,5 @@ jobs:
         with:
           name: habit-tracker-apk
           path: app/build/outputs/apk/debug/*.apk
+          
+          
